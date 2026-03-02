@@ -10,3 +10,6 @@ Hostinger VPS (cloud infrastructure)
 Secure remote log forwarding
 MITRE ATT&CK-aligned detection engineering
 The objective was to simulate a small enterprise SOC environment and implement low-noise, production-oriented endpoint detection.
+
+Log Flow
+Windows 11 Endpoint ->Sysmon -> Wazuh Agent -> Encrypted Log Forwarding -> Hostinger VPS (Dockerized Wazuh Stack)
