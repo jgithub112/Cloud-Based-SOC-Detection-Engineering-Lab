@@ -8,8 +8,8 @@ Execution
     T1059 - Suspicious command-line logging
     T1204  - Execution from user directories
 Persistence
-    Registry Run / RunOnce keys
-    Services and Winlogon modifications
+    T1547.001 - Registry Run / RunOnce keys
+    T1543.003 - Services and Winlogon modifications
 Lateral Movement
     Network connections to:
       445 (SMB)
