@@ -1,0 +1,11 @@
+Key Detection Use Cases
+Malicious Download Detection
+
+Attack Chain Covered:
+Download → Execution → Network Activity → Persistence Attempt
+
+Monitoring includes:
+
+    Sysmon Event ID 11 (File Creation)
+    Sysmon Event ID 1 (Process Creation)
+    Suspicious execution from user paths
