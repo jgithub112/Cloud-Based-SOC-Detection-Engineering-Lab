@@ -1,0 +1,8 @@
+Detection Engineering Objectives
+
+Reduce Sysmon noise while preserving high-value telemetry
+Detect malicious browser downloads
+Detect PowerShell abuse and encoded commands
+Detect registry persistence
+Detect lateral movement (SMB / RDP / WinRM)
+Align detections with MITRE ATT&CK
