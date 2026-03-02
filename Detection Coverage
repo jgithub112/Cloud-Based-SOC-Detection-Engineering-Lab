@@ -1,8 +1,8 @@
 Detection Coverage
 
 Initial Access
-    Executable creation in user-controlled directories
-    Downloads folder monitoring
+    T1105 - Executable creation in user-controlled directories (Users\Downloads, Desktop)
+    T1204 - Execution of files from Downloads/Desktop directories
 Execution
     Encoded PowerShell command detection
     Suspicious command-line logging
