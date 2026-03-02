@@ -1,0 +1,17 @@
+Detection Coverage
+
+Initial Access
+    Executable creation in user-controlled directories
+    Downloads folder monitoring
+Execution
+    Encoded PowerShell command detection
+    Suspicious command-line logging
+    Execution from user directories
+Persistence
+    Registry Run / RunOnce keys
+    Services and Winlogon modifications
+Lateral Movement
+    Network connections to:
+      445 (SMB)
+      3389 (RDP)
+      5985/5986 (WinRM)
