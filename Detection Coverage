@@ -4,9 +4,9 @@ Initial Access
     T1105 - Executable creation in user-controlled directories (Users\Downloads, Desktop)
     T1204 - Execution of files from Downloads/Desktop directories
 Execution
-    Encoded PowerShell command detection
-    Suspicious command-line logging
-    Execution from user directories
+    T1059.001 - Encoded PowerShell command detection
+    T1059 - Suspicious command-line logging
+    T1204  - Execution from user directories
 Persistence
     Registry Run / RunOnce keys
     Services and Winlogon modifications
