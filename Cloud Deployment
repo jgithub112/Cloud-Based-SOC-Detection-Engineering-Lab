@@ -1,0 +1,12 @@
+Cloud Deployment
+
+The Wazuh SIEM stack was deployed on a Hostinger VPS using Docker containers:
+
+wazuh.manager
+wazuh.indexer
+wazuh.dashboard
+
+The endpoint agent securely forwards Sysmon telemetry to the cloud-hosted manager.
+At the time of this snapshot:
+
+1 Windows 11 endpoint is actively enrolled
