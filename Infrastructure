@@ -1,0 +1,7 @@
+Component            Technology
+Cloud Host           Hostinger VPS(KVM)
+SIEM                 Wazuh
+Deployment           Docker
+Endpoint             Windows 11
+Telemetry            Sysmon
+Log Transport        Wazuh Agent
