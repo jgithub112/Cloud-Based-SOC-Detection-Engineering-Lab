@@ -1,0 +1,114 @@
+<Sysmon schemaversion="4.90">
+  <HashAlgorithms>sha256</HashAlgorithms>
+
+  <EventFiltering>
+
+    <!-- ============================= -->
+    <!-- 1️⃣ Suspicious Process Creation -->
+    <!-- ============================= -->
+    <ProcessCreate onmatch="include">
+      <!-- LOLBins -->
+      <Image condition="end with">powershell.exe</Image>
+      <Image condition="end with">cmd.exe</Image>
+      <Image condition="end with">wscript.exe</Image>
+      <Image condition="end with">cscript.exe</Image>
+      <Image condition="end with">mshta.exe</Image>
+      <Image condition="end with">rundll32.exe</Image>
+      <Image condition="end with">regsvr32.exe</Image>
+      <Image condition="end with">wmic.exe</Image>
+
+      <!-- Suspicious commandline -->
+      <CommandLine condition="contains">-enc</CommandLine>
+      <CommandLine condition="contains">Invoke-Expression</CommandLine>
+      <CommandLine condition="contains">DownloadString</CommandLine>
+      <CommandLine condition="contains">IEX</CommandLine>
+    </ProcessCreate>
+
+    <!-- Detect execution from Downloads/Desktop -->
+    <ProcessCreate onmatch="include">
+      <Image condition="contains">\Downloads\</Image>
+      <Image condition="contains">\Desktop\</Image>
+    </ProcessCreate>
+
+    <!-- ============================= -->
+    <!-- 2️⃣ Network Connections (External Only) -->
+    <!-- ============================= -->
+    <NetworkConnect onmatch="exclude">
+      <DestinationIp>127.0.0.1</DestinationIp>
+      <DestinationIp>::1</DestinationIp>
+    </NetworkConnect>
+
+    <!-- ============================= -->
+    <!-- 3️⃣ Malicious Browser Download Detection -->
+    <!-- ============================= -->
+
+    <!-- Detect executable dropped in user space -->
+    <FileCreate onmatch="include">
+
+     <!-- Browser Processes -->
+     <Image condition="end with">\chrome.exe</Image>
+     <Image condition="end with">\msedge.exe</Image>
+     <Image condition="end with">\firefox.exe</Image>
+     <Image condition="end with">\brave.exe</Image>
+     <Image condition="end with">\opera.exe</Image>
+
+
+
+      <TargetFilename condition="contains">\Downloads\</TargetFilename>
+
+      <TargetFilename condition="end with">.exe</TargetFilename>
+      <TargetFilename condition="end with">.dll</TargetFilename>
+      <TargetFilename condition="end with">.ps1</TargetFilename>
+      <TargetFilename condition="end with">.bat</TargetFilename>
+      <TargetFilename condition="end with">.vbs</TargetFilename>
+      <TargetFilename condition="end with">.js</TargetFilename>
+      <TargetFilename condition="end with">.hta</TargetFilename>
+    </FileCreate>
+
+    <!-- Exclude common temp noise -->
+    <FileCreate onmatch="exclude">
+      <TargetFilename condition="contains">\AppData\Local\Temp\</TargetFilename>
+      <TargetFilename condition="contains">\Windows\SoftwareDistribution\</TargetFilename>
+    </FileCreate>
+
+    <!-- ============================= -->
+    <!-- 4️⃣ Registry Persistence -->
+    <!-- ============================= -->
+    <RegistryEvent onmatch="include">
+      <TargetObject condition="contains">\Run</TargetObject>
+      <TargetObject condition="contains">\RunOnce</TargetObject>
+      <TargetObject condition="contains">\Services\</TargetObject>
+      <TargetObject condition="contains">\Winlogon\</TargetObject>
+    </RegistryEvent>
+
+    <!-- ============================= -->
+    <!-- 5️⃣ Process Injection (High-Risk Access Only) -->
+    <!-- ============================= -->
+    <ProcessAccess onmatch="include">
+      <GrantedAccess condition="contains">0x1F0FFF</GrantedAccess>
+      <GrantedAccess condition="contains">0x1FFFFF</GrantedAccess>
+    </ProcessAccess>
+
+    <!-- ============================= -->
+    <!-- 6️⃣ Lateral Movement Ports -->
+    <!-- ============================= -->
+    <NetworkConnect onmatch="include">
+      <DestinationPort>445</DestinationPort>   <!-- SMB -->
+      <DestinationPort>3389</DestinationPort>  <!-- RDP -->
+      <DestinationPort>5985</DestinationPort>  <!-- WinRM -->
+      <DestinationPort>5986</DestinationPort>  <!-- WinRM HTTPS -->
+    </NetworkConnect>
+
+    <!-- ============================= -->
+    <!-- 7️⃣ DNS (Reduce Noise) -->
+    <!-- ============================= -->
+    <DnsQuery onmatch="exclude">
+      <QueryName condition="end with">.microsoft.com</QueryName>
+      <QueryName condition="end with">.windowsupdate.com</QueryName>
+      <QueryName condition="end with">.office.com</QueryName>
+      <QueryName condition="end with">.google.com</QueryName>
+      <QueryName condition="end with">.bing.com</QueryName>
+    </DnsQuery>
+
+  </EventFiltering>
+</Sysmon>
